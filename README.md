@@ -7,15 +7,11 @@
 # 安装所需库
 
     图片识别采用的是本机的OCR，需先安装下载OCR
-    ```
         brew install tesseract
         下载中文识别包放进/tesseract/3.05.01/share/tessdata'目录下
         https://github.com/tesseract-ocr/tessdata
-    ```
     python所需库安装
-    ```
         pip install -r requirements.txt
-    ```
 
 # 截图
 
