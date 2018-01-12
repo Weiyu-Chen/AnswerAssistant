@@ -61,15 +61,8 @@ def main():
         print('选项一:' + answerOne)
         print('选项二:' + answerTwo)
         print('选项三:' + answerThree)
-        ###   搜索答案，悟空问答
-        wukongR = requests.get(url='https://www.wukong.com/wenda/web/search/brow/?search_text=' + urllib.parse.quote(question) + '&count=10')
-        if wukongResult["data"]["feed_question"][0]['ans_list']:
-            wukongResult = wukongResult["data"]["feed_question"][0]['ans_list'][0]['abstract_text']
-        else:
-            wukongResult = '无答案'
-        print('悟空问答：' + wukongResult)
         ###   搜索答案，百度搜索
-        baiduR = requests.get('http://www.baidu.com/s?wd=' + '巴西的官方语言').text
+        baiduR = requests.get('http://www.baidu.com/s?wd=' + question).text
         baiduResult = BeautifulSoup(baiduR, 'html.parser')
         baiduRegOne = re.compile("(?=" + answerOne + ")")
         baiduRegTwo = re.compile("(?=" + answerTwo + ")")
@@ -87,9 +80,9 @@ def main():
         else:
             baiduLengthThree = '0'
         print("百度搜索：")
-        print("选项一：" + baiduLengthOne)
-        print("选项二：" + baiduLengthTwo)
-        print("选项三：" + baiduLengthThree)
+        print("选项一：" + str(baiduLengthOne))
+        print("选项二：" + str(baiduLengthTwo))
+        print("选项三：" + str(baiduLengthThree))
         ###答题结束
         end = time.time()
         print('总共用时：' + str( end - start ) + '秒')
