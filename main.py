@@ -43,39 +43,41 @@ def main():
         ##  搜索答案，百度搜索
         baiduR = requests.get('http://www.baidu.com/s?wd=' + question).text
         baiduResult = BeautifulSoup(baiduR, 'html.parser')
-        baiduRegOne = re.compile("(?=" + words_result[-3]["words"] + ")")
-        baiduRegTwo = re.compile("(?=" + words_result[-2]["words"] + ")")
-        baiduRegThree = re.compile("(?=" + words_result[-1]["words"] + ")")
-        if words_result[-3]["words"]:
-            baiduLengthOne = len(baiduRegOne.findall(str(baiduResult)))
+        if len(words_result) > 3:
+            baiduRegOne = re.compile("(?=" + words_result[-3]["words"] + ")")
+            baiduRegTwo = re.compile("(?=" + words_result[-2]["words"] + ")")
+            baiduRegThree = re.compile("(?=" + words_result[-1]["words"] + ")")
+            if words_result[-3]["words"]:
+                baiduLengthOne = len(baiduRegOne.findall(str(baiduResult)))
+            else:
+                baiduLengthOne = '0'
+            if words_result[-2]["words"]:
+                baiduLengthTwo = len(baiduRegTwo.findall(str(baiduResult)))
+            else:
+                baiduLengthTwo = '0'
+            if words_result[-1]["words"]:
+                baiduLengthThree = len(baiduRegThree.findall(str(baiduResult)))
+            else:
+                baiduLengthThree = '0'
+            print('问题:' + question)
+            print('选项一:' + words_result[-3]["words"])
+            print('选项二:' + words_result[-2]["words"])
+            print('选项三:' + words_result[-1]["words"])
+            print("百度搜索：")
+            if baiduLengthOne > baiduLengthTwo and baiduLengthOne > baiduLengthThree:
+                print("选项一：" + '\33[91m' + words_result[-3]["words"] + '====指数：' + str(baiduLengthOne) + '\033[0m')
+            else:
+                print("选项一：" + words_result[-3]["words"] + '====指数：' + str(baiduLengthOne))
+            if baiduLengthTwo > baiduLengthOne and baiduLengthTwo > baiduLengthThree:
+                print("选项二：" + '\33[91m' + words_result[-2]["words"] + '====指数：' + str(baiduLengthTwo) + '\033[0m')
+            else:
+                print("选项二：" + words_result[-2]["words"] + '====指数：' + str(baiduLengthTwo))
+            if baiduLengthThree > baiduLengthTwo and baiduLengthThree > baiduLengthOne:
+                print("选项三：" + '\33[91m' + words_result[-1]["words"] + '====指数：' + str(baiduLengthThree) + '\033[0m')
+            else:
+                print("选项三：" + words_result[-1]["words"] + '====指数：' + str(baiduLengthThree))
         else:
-            baiduLengthOne = '0'
-        if words_result[-2]["words"]:
-            baiduLengthTwo = len(baiduRegTwo.findall(str(baiduResult)))
-        else:
-            baiduLengthTwo = '0'
-        if words_result[-1]["words"]:
-            baiduLengthThree = len(baiduRegThree.findall(str(baiduResult)))
-        else:
-            baiduLengthThree = '0'
-        print('问题:' + question)
-        print('选项一:' + words_result[-3]["words"])
-        print('选项二:' + words_result[-2]["words"])
-        print('选项三:' + words_result[-1]["words"])
-        print("百度搜索：")
-        if baiduLengthOne > baiduLengthTwo and baiduLengthOne > baiduLengthThree:
-            print("选项一：" + '\33[91m' + words_result[-3]["words"] + '====指数：' + str(baiduLengthOne) + '\033[0m')
-        else:
-            print("选项一：" + words_result[-3]["words"] + '====指数：' + str(baiduLengthOne))
-        if baiduLengthTwo > baiduLengthOne and baiduLengthTwo > baiduLengthThree:
-            print("选项二：" + '\33[91m' + words_result[-2]["words"] + '====指数：' + str(baiduLengthTwo) + '\033[0m')
-        else:
-            print("选项二：" + words_result[-2]["words"] + '====指数：' + str(baiduLengthTwo))
-        if baiduLengthThree > baiduLengthTwo and baiduLengthThree > baiduLengthOne:
-            print("选项三：" + '\33[91m' + words_result[-1]["words"] + '====指数：' + str(baiduLengthThree) + '\033[0m')
-        else:
-            print("选项三：" + words_result[-1]["words"] + '====指数：' + str(baiduLengthThree))
-        
+            print('\33[91m' + '图片识别有误，祝您好运~' + '\033[0m')
         ###答题结束
         end = time.time()
         print('总共用时：' + str( end - start ) + '秒')
